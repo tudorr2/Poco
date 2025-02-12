@@ -23,7 +23,7 @@ const showProductDetails = async () => {
 			<h5 class="card-title  mt-4 detail-price" >Category: ${productInfo.category}</h5>
 
 			<h5 class="card-title  mt-4 detail-price" >${productInfo.price}$</h5>
-			<button id=${productInfo.id} class="btn btn-outline-light mt-2 add-to-cart btn-add-cart">Add to cart</button>
+			<button id=${productInfo.id} onclick="addToCart(PRODUCT_ID)" class="btn btn-outline-light mt-2 add-to-cart btn-add-cart">Add to cart</button>
 			
 		  </div>
 		</div>
@@ -50,27 +50,42 @@ fetch("https://63372212132b46ee0bddc50f.mockapi.io/product")
 let products = JSON.parse(localStorage.getItem("products"));
 let cart = JSON.parse(localStorage.getItem("cart"));
 
-function addItemToCart(productId) {
-  let product = products.find(function (product) {
-    return product.id == productId;
-  });
+function addToCart(productId) {
+  let products = JSON.parse(localStorage.getItem("products")) || [];
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  let basket = JSON.parse(localStorage.getItem("basket")) || [];
 
-  if (cart.length == 0) {
-    cart.push(product);
-  } else {
-    let res = cart.find((element) => element.id == productId);
-    if (res === undefined) {
-      cart.push(product);
-    }
+  let product = products.find((p) => p.id == productId);
+
+  if (!product) {
+    console.error("Product not found!");
+    return;
   }
 
+  // Add to cart only if it's not already there
+  if (!cart.some((item) => item.id == product.id)) {
+    cart.push(product);
+  }
+
+  // Update basket quantity
+  let basketItem = basket.find((x) => x.id == product.id);
+  if (basketItem) {
+    basketItem.item += 1;
+  } else {
+    basket.push({ id: product.id, item: 1 });
+  }
+
+  // Save to localStorage
   localStorage.setItem("cart", JSON.stringify(cart));
+  localStorage.setItem("basket", JSON.stringify(basket));
+
+  // alert(`${product.name} added to cart!`);
 }
 
 const handleActions = (event) => {
   if (event.target.classList.contains("add-to-cart")) {
     const productId = event.target.id;
-    addItemToCart(productId);
+    addToCart(productId);
   }
 };
 

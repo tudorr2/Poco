@@ -14,24 +14,27 @@ let cart = JSON.parse(localStorage.getItem("cart"));
 let basket = JSON.parse(localStorage.getItem("basket")) || [];
 
 function removeItemFromCart(productId) {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  let basket = JSON.parse(localStorage.getItem("basket")) || [];
+
   cart = cart.filter((item) => item.id != productId);
   basket = basket.filter((item) => item.id != productId);
 
   localStorage.setItem("cart", JSON.stringify(cart));
   localStorage.setItem("basket", JSON.stringify(basket));
 
-  document.querySelector(".tbody").innerText = "";
-  loadCart(); // Reload the cart dynamically instead of reloading the whole page
+  loadCart();
   getTotal();
 }
 
 let increment = (id) => {
-  let search = basket.find((x) => x.id === id);
+  let basket = JSON.parse(localStorage.getItem("basket")) || [];
 
-  if (!search) {
-    basket.push({ id: id, item: 1 });
+  let search = basket.find((item) => item.id == id);
+  if (search) {
+    search.item += 1;
   } else {
-    search.item++;
+    basket.push({ id: id, item: 1 });
   }
 
   localStorage.setItem("basket", JSON.stringify(basket));
@@ -40,27 +43,37 @@ let increment = (id) => {
 };
 
 let decrement = (id) => {
-  let search = basket.find((x) => x.id === id);
+  let basket = JSON.parse(localStorage.getItem("basket")) || [];
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  if (!search || search.item === 0) return;
+  let search = basket.find((item) => item.id == id);
+  if (!search) return;
 
-  search.item--;
-
-  if (search.item === 0) {
-    basket = basket.filter((item) => item.id !== id);
+  if (search.item > 1) {
+    search.item -= 1;
+  } else {
+    basket = basket.filter((item) => item.id != id);
+    cart = cart.filter((item) => item.id != id);
   }
 
   localStorage.setItem("basket", JSON.stringify(basket));
-  update(id);
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  loadCart();
   getTotal();
 };
 
-let update = (id, price) => {
-  let search = basket.find((x) => x.id === id);
+let update = (id) => {
+  let basket = JSON.parse(localStorage.getItem("basket")) || [];
+  let search = basket.find((item) => item.id == id);
 
-  console.log(search.price);
-  document.getElementById(id).innerHTML = search.item;
+  if (search) {
+    document.getElementById(id).innerText = search.item;
+  } else {
+    document.getElementById(id).innerText = 0;
+  }
 };
+
 //make rows
 
 const loadCart = () => {
@@ -115,22 +128,6 @@ document.querySelector(".buy-btn").addEventListener("click", () => {
   alert("This is just a personal project👽");
 });
 
-// let TotalAmount = () => {
-//   if(basket.length !== 0 ){
-//     let amount = basket.map((x) =>{
-//       let {item , id} = x;
-//       let search = products.find((y) => y.id === id) || [];
-
-//       return item * search.price;
-
-//     })
-//     console.log(amount);
-//   }
-//   else return;
-// }
-
-// TotalAmount();
-
 function getTotal() {
   let basket = JSON.parse(localStorage.getItem("basket")) || [];
   let products = JSON.parse(localStorage.getItem("products")) || [];
@@ -148,23 +145,3 @@ function getTotal() {
 }
 
 getTotal();
-
-// function getTotal() {
-//   let quantity = JSON.parse(localStorage.getItem("basket"));
-//   let temp2 = quantity.map((basket) => {
-//     return parseFloat(basket.item);
-//   });
-//   let quantity2 = temp2.reduce((prev, next) => {
-//     return next + prev
-//   });
-//   let temp = cart.map((item) => {
-//     return parseFloat(item.price);
-//   }, 0);
-//   let sum = temp.reduce(function (prev, next) {
-//     return prev + next * quantity2 ;
-//   }, 0);
-
-//   document.querySelector(
-//     ".total-price"
-//   ).innerHTML = `<h1 class="text-dark  total-price">Total price: <span class="text-dark">$${sum}</span></span></h1> `;
-// }
