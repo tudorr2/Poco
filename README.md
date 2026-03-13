@@ -1,18 +1,18 @@
+---
+<br/>
+
+<div align="center">
+<img src="resources/favicons/icons8-bicycle-96.png" alt="Poco Logo" width="90"/>
+<h1>Poco</h1>
+<p><strong>A fully client-side e-commerce storefront built for Mountain Bike enthusiasts.</strong></p>
+<a href="https://tudorr2.github.io/Poco/">🌐 Live Demo</a>
+</div>
+
 ![Status](https://img.shields.io/badge/Status-Completed-2ECC71?style=for-the-badge&logo=checkmarx&logoColor=white)
 ![HTML](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 ![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-222222?style=for-the-badge&logo=github&logoColor=white)
-
-<br/>
-
-<div align="center">
-  <img src="resources/favicons/icons8-bicycle-96.png" alt="Poco Logo" width="90"/>
-  <h1>Poco</h1>
-  <p><strong>A fully client-side e-commerce storefront built for Mountain Bike enthusiasts.</strong></p>
-  <a href="https://tudorr2.github.io/Poco/">🌐 Live Demo</a>
-</div>
-
 ---
 
 ## 📖 About
@@ -59,30 +59,6 @@ Poco/
 | **JavaScript (ES6+)** | Application logic, DOM manipulation, state management |
 | **LocalStorage API**  | Client-side data persistence for cart and products    |
 | **GitHub Pages**      | Static site hosting & deployment                      |
-
----
-
-## 🚀 Getting Started
-
-No installation or build step needed — just open in a browser.
-
-**Clone the repository:**
-
-```bash
-git clone https://github.com/tudorr2/Poco.git
-cd Poco
-```
-
-**Run locally:**
-
-Open `index.html` directly in your browser, or use a simple local server:
-
-```bash
-# Using the VS Code Live Server extension, or:
-npx serve .
-```
-
-Alternatively, visit the **[live deployment](https://tudorr2.github.io/Poco/)** directly — no setup required.
 
 ---
 
